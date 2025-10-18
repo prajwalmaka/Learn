@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="calendar-header">
+    <h1>Assignments Calendar</h1>
+    <div class="calendar-nav">
+        <a href="?month={{ prev_month }}" class="btn">&lt; Previous</a>
+        <h2>{{ month|date:"F Y" }}</h2>
+        <a href="?month={{ next_month }}" class="btn">Next &gt;</a>
+    </div>
+</div>
+
+<div class="calendar-container">
+    {{ calendar|safe }}
+</div>
+{% endblock %}

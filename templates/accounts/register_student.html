@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="auth-form">
+    <h2>Student Registration</h2>
+    <form method="post" novalidate>
+        {% csrf_token %}
+        
+        {% if form.non_field_errors %}
+        <div class="alert alert-danger">
+            {{ form.non_field_errors }}
+        </div>
+        {% endif %}
+        
+        <div class="form-group">
+            {{ form.username.label_tag }}
+            {{ form.username }}
+            {% if form.username.errors %}
+            <div class="invalid-feedback">
+                {{ form.username.errors }}
+            </div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            {{ form.email.label_tag }}
+            {{ form.email }}
+            {% if form.email.errors %}
+            <div class="invalid-feedback">
+                {{ form.email.errors }}
+            </div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            {{ form.admission_date.label_tag }}
+            {{ form.admission_date }}
+            {% if form.admission_date.errors %}
+            <div class="invalid-feedback">
+                {{ form.admission_date.errors }}
+            </div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            {{ form.parent_email.label_tag }}
+            {{ form.parent_email }}
+            {% if form.parent_email.errors %}
+            <div class="invalid-feedback">
+                {{ form.parent_email.errors }}
+            </div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            {{ form.password1.label_tag }}
+            {{ form.password1 }}
+            {% if form.password1.errors %}
+            <div class="invalid-feedback">
+                {{ form.password1.errors }}
+            </div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            {{ form.password2.label_tag }}
+            {{ form.password2 }}
+            {% if form.password2.errors %}
+            <div class="invalid-feedback">
+                {{ form.password2.errors }}
+            </div>
+            {% endif %}
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Register</button>
+    </form>
+    
+    <div class="auth-footer">
+        Already have an account? <a href="{% url 'login' %}">Login here</a>
+    </div>
+</div>
+{% endblock %}

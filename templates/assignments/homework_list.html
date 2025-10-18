@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<h1>{% if request.user.is_teacher %}My Assignments{% else %}My Homework{% endif %}</h1>
+
+{% if request.user.is_teacher %}
+<a href="{% url 'homework-create' %}" class="btn">Create New Assignment</a>
+{% endif %}
+
+<div class="assignment-list">
+    {% for homework in object_list %}
+    <div class="assignment-card {% if homework.due_date|date:'Ymd' < today|date:'Ymd' %}overdue{% endif %}">
+        <h3>{{ homework.title }}</h3>
+        <p>Due: {{ homework.due_date|date:"M d, Y H:i" }}</p>
+        <p>Class: {{ homework.class_group.name }}</p>
+        
+        <div class="assignment-actions">
+            <a href="{% url 'homework-detail' homework.pk %}" class="btn">View</a>
+            {% if request.user.is_student %}
+                {% with submission=homework.submission_set.filter(student=request.user).first %}
+                    {% if submission %}
+                        <span class="status submitted">Submitted</span>
+                    {% else %}
+                        <span class="status pending">Pending</span>
+                    {% endif %}
+                {% endwith %}
+            {% endif %}
+        </div>
+    </div>
+    {% empty %}
+    <p>No assignments found.</p>
+    {% endfor %}
+</div>
+{% endblock %}

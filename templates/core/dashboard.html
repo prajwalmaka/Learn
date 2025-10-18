@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<h1>Dashboard</h1>
+
+{% if request.user.is_teacher %}
+<div class="dashboard-section">
+    <h2>My Recent Classes</h2>
+    {% if classes %}
+    <div class="card-grid">
+        {% for class in classes %}
+        <div class="card">
+            <h3>{{ class.name }}</h3>
+            <p>{{ class.students.count }} students</p>
+            <a href="{% url 'class-detail' class.pk %}" class="btn">View Class</a>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p>No classes yet. <a href="{% url 'class-create' %}">Create your first class</a></p>
+    {% endif %}
+</div>
+
+<div class="dashboard-section">
+    <h2>Recent Assignments</h2>
+    {% if recent_assignments %}
+    <ul class="assignment-list">
+        {% for assignment in recent_assignments %}
+        <li>
+            <h3>{{ assignment.title }}</h3>
+            <p>Due: {{ assignment.due_date|date:"M d, Y" }}</p>
+            <p>Class: {{ assignment.class_group.name }}</p>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>No assignments yet. <a href="{% url 'homework-create' %}">Create your first assignment</a></p>
+    {% endif %}
+</div>
+
+{% else %}
+<div class="dashboard-section">
+    <h2>Pending Assignments</h2>
+    {% if pending_assignments %}
+    <ul class="assignment-list">
+        {% for assignment in pending_assignments %}
+        <li>
+            <h3>{{ assignment.title }}</h3>
+            <p>Due: {{ assignment.due_date|date:"M d, Y" }}</p>
+            <a href="{% url 'homework-detail' assignment.pk %}" class="btn">View Assignment</a>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>No pending assignments. Great job!</p>
+    {% endif %}
+</div>
+
+<div class="dashboard-section">
+    <h2>Recent Submissions</h2>
+    {% if recent_submissions %}
+    <ul class="submission-list">
+        {% for submission in recent_submissions %}
+        <li>
+            <h3>{{ submission.homework.title }}</h3>
+            <p>Submitted: {{ submission.submitted_at|date:"M d, Y" }}</p>
+            {% if submission.grade %}
+            <p>Grade: {{ submission.grade.score }}/10</p>
+            {% else %}
+            <p>Status: Pending review</p>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>No submissions yet.</p>
+    {% endif %}
+</div>
+{% endif %}
+{% endblock %}

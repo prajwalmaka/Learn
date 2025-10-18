@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="hero">
+    <h1>Welcome to LearnTrack</h1>
+    <p>Manage your educational institution with ease</p>
+    
+    <div class="auth-options">
+        {% if user.is_authenticated %}
+            <a href="{% url 'dashboard' %}" class="btn">Go to Dashboard</a>
+        {% else %}
+            <a href="{% url 'login' %}" class="btn">Login</a>
+            <a href="{% url 'register-teacher' %}" class="btn">Register as Teacher</a>
+            <a href="{% url 'register-student' %}" class="btn secondary">Register as Student</a>
+        {% endif %}
+    </div>
+</div>
+
+<div class="features">
+    <div class="feature-card">
+        <h3>For Teachers</h3>
+        <ul>
+            <li>Create and manage classes</li>
+            <li>Assign homework to students</li>
+            <li>Track student progress</li>
+        </ul>
+    </div>
+    
+    <div class="feature-card">
+        <h3>For Students</h3>
+        <ul>
+            <li>View assigned homework</li>
+            <li>Submit assignments online</li>
+            <li>Check grades and feedback</li>
+        </ul>
+    </div>
+</div>
+{% endblock %}

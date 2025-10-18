@@ -1,0 +1,6 @@
+Django==4.2
+psycopg2-binary==2.9.6  # For PostgreSQL in production
+python-dotenv==1.0.0
+whitenoise==6.4.0  # For static files
+django-crispy-forms==2.0  # For form rendering
+reportlab==4.0.4  # For PDF generation

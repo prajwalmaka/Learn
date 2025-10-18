@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<h1>Performance Dashboard</h1>
+
+<div class="stats-grid">
+    <div class="stat-card">
+        <h3>Total Assignments</h3>
+        <p>{{ total_assignments }}</p>
+    </div>
+    <div class="stat-card">
+        <h3>Total Submissions</h3>
+        <p>{{ total_submissions }}</p>
+    </div>
+    <div class="stat-card">
+        <h3>Submission Rate</h3>
+        <p>{{ submission_rate }}%</p>
+    </div>
+    <div class="stat-card">
+        <h3>Average Grade</h3>
+        <p>{{ avg_grade|floatformat:2 }}</p>
+    </div>
+</div>
+
+<h2>My Classes</h2>
+<div class="class-grid">
+    {% for class in classes %}
+    <div class="class-card">
+        <h3>{{ class.name }}</h3>
+        <p>Students: {{ class.students.count }}</p>
+        <a href="{% url 'class-performance' class.pk %}" class="btn">View Performance</a>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
